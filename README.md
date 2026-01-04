@@ -2,47 +2,55 @@
 
 <img src="https://img.shields.io/github/stars/minhtrifit/expressjs-boilerplate"/> ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/minhtrifit/expressjs-boilerplate)
 
-## 💻 Required & Technical Stack
+# 📋 Table of Contents
+
+1. [Required & Technical Stack](#required-technical-stack)
+2. [Config](#config)
+3. [Installation](#installation)
+4. [API List](#api-list)
+
+## 💻 Required & Technical Stack <a name="required-technical-stack"></a>
 
 - Node version: >18.x (recommend 24.12.0)
+- [Express.js](https://expressjs.com)
+- [ProgreSQL](https://www.postgresql.org)
+- [Prisma](https://www.prisma.io)
 
-## ⚙️ Config .env file
+## ⚙️ Config .env file <a name="config"></a>
 
-Config [.env]() file in root dir with path `./.env`
+- Config [.env]() file in root dir with path `./.env`
+- Project use [Prisma](https://www.prisma.io/docs/getting-started) as ORM
 
 ```bash
 PORT=5000
 NODE_ENV=development
 CLIENT_URL=http://localhost:3000
+DATABASE_URL="postgresql://postgresql:123456@localhost:5432/expressjs_boilerplate"
 ```
 
-## 📦 Installation
+## 📦 Installation <a name="installation"></a>
 
-Intall packages & dependencies
+⛓️‍💥 Intall packages & dependencies
 
 ```console
 npm install
 ```
 
-Start **DEVELOPMENT** mode
+💽 Run **DEVELOPMENT** mode (need to install packages & dependencies first)
 
 ```console
+npm run prisma:generate
+npm run prisma:migrate:dev
 npm run dev
 ```
 
-Build project (run this before start with **production** mode)
+💽 Run **PRODUCTION** mode (need to install packages & dependencies first)
 
 ```console
-npm run build
+npm run prod
 ```
 
-Start **PRODUCTION** mode (need to build first)
-
-```console
-npm run start
-```
-
-Check **ESLint**
+✅ Check **ESLint**
 
 ```console
 npm run lint
@@ -54,7 +62,7 @@ npm run lint
 npm run lint:fix
 ```
 
-Check **Prettier**
+✅ Check **Prettier**
 
 ```console
 npm run prettier
@@ -64,4 +72,87 @@ npm run prettier
 
 ```console
 npm run prettier:fix
+```
+
+⛃ Create **Prisma** migration
+
+```console
+npm run prisma:migrate:dev
+```
+
+⟲ Reset **Prisma** database
+
+```console
+npm run prisma:reset
+```
+
+🌱 Seed **Prisma** database
+
+```console
+npm run prisma:seed
+```
+
+## 📝 API List<a name="api-list"></a>
+
+**User**
+
+- Get user list
+
+`[GET]`: `http://localhost:5000/api/users`
+
+### Query Parameters
+
+| Query      | Type    | Required | Description                                  |
+| ---------- | ------- | -------- | -------------------------------------------- |
+| `page`     | number  | ❌       | Current page (default: `1`)                  |
+| `limit`    | number  | ❌       | Items per page (default: `10`, max: `100`)   |
+| `q`        | string  | ❌       | Search by `email` or `name`                  |
+| `isActive` | boolean | ❌       | Filter by isActive status (`true` / `false`) |
+
+- Get user by id
+
+`[GET]`: `http://localhost:5000/api/users/:id`
+
+- Create new user
+
+`[POST]`: `http://localhost:5000/api/users`
+
+### Request Body
+
+| Query      | Type              | Required |
+| ---------- | ----------------- | -------- |
+| `email`    | string            | ✅       |
+| `fullName` | string            | ✅       |
+| `password` | string            | ✅       |
+| `role`     | `ADMIN` or `USER` | ❌       |
+
+```json
+{
+  "email": "tri@example.com",
+  "fullName": "minhtrifit",
+  "password": "123456",
+  "role": "USER" | "ADMIN"
+}
+```
+
+- Update user
+
+`[PATCH]`: `http://localhost:5000/api/users/:id`
+
+### Request Body
+
+| Query      | Type              | Required |
+| ---------- | ----------------- | -------- |
+| `email`    | string            | ❌       |
+| `fullName` | string            | ❌       |
+| `password` | string            | ❌       |
+| `role`     | `ADMIN` or `USER` | ❌       |
+
+```json
+{
+  "email": "tri@example.com",
+  "fullName": "minhtrifit",
+  "password": "123456",
+  "role": "USER" | "ADMIN"
+}
 ```

@@ -1,0 +1,25 @@
+services:
+  server:
+    container_name: express-boilerplate-api
+    build: .
+    ports:
+      - '5000:5000'
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15
+    container_name: expressjs-boilerplate-database
+    environment:
+      POSTGRES_USER: postgresql
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

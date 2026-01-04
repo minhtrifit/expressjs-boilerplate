@@ -6,10 +6,15 @@ import eslintPluginPrettier from 'eslint-plugin-prettier';
 
 export default defineConfig([
   {
+    ignores: ['node_modules/**', 'dist/**', '**/generated/**']
+  },
+  {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
     plugins: { js },
     extends: ['js/recommended'],
-    languageOptions: { globals: globals.node }
+    languageOptions: {
+      globals: globals.node
+    }
   },
   tseslint.configs.recommended,
   {
@@ -18,7 +23,7 @@ export default defineConfig([
     },
     rules: {
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-unused-vars': 'off',
       'prettier/prettier': [
         'warn',
         {
@@ -33,7 +38,6 @@ export default defineConfig([
           jsxSingleQuote: true
         }
       ]
-    },
-    ignores: ['**/node_modules/', '**/dist/']
+    }
   }
 ]);
