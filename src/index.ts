@@ -1,10 +1,13 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 import { errorHandler } from './middlewares/errorHandler';
+import { multerErrorHandler } from './middlewares/multer-error.middleware';
 import { HTTP_STATUS } from './constants/http-status-code';
 import userRoutes from './routes/user.router';
 import authRoutes from './routes/auth.router';
+import uploadRoutes from './routes/upload.router';
 
 dotenv.config();
 
@@ -22,6 +25,7 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static(path.resolve('uploads')));
 
 // Routes
 app.get('/', (req, res) => {
@@ -29,8 +33,10 @@ app.get('/', (req, res) => {
 });
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Error handling middleware
+app.use(multerErrorHandler);
 app.use(errorHandler);
 
 app.listen(PORT, () => {

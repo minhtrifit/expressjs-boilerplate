@@ -197,3 +197,41 @@ npm run prisma:seed
   "password": "123456"
 }
 ```
+
+**Upload**
+
+- Single upload
+
+`[POST]`: `http://localhost:5000/api/upload/single`
+
+### Request Header
+
+| Key             | Type                | Required |
+| --------------- | ------------------- | -------- |
+| `Content-Type`  | multipart/form-data | ✅       |
+| `Authorization` | Bearer token-value  | ✅       |
+
+### Request Body (form-data)
+
+| Query  | Type | Required |
+| ------ | ---- | -------- |
+| `file` | File | ✅       |
+| `name` | Text | ❌       |
+
+- Multiple upload
+
+`[POST]`: `http://localhost:5000/api/upload/multiple`
+
+### Request Header
+
+| Key             | Type                | Required |
+| --------------- | ------------------- | -------- |
+| `Content-Type`  | multipart/form-data | ✅       |
+| `Authorization` | Bearer token-value  | ✅       |
+
+### Request Body (form-data)
+
+| Query   | Type | Required |
+| ------- | ---- | -------- |
+| `files` | File | ✅       |
+| `name`  | Text | ❌       |
