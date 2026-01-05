@@ -25,6 +25,7 @@
 PORT=5000
 NODE_ENV=development
 CLIENT_URL=http://localhost:3000
+JWT_SECRET=expressjs_boilerplate
 DATABASE_URL="postgresql://postgresql:123456@localhost:5432/expressjs_boilerplate"
 ```
 
@@ -154,5 +155,45 @@ npm run prisma:seed
   "fullName": "minhtrifit",
   "password": "123456",
   "role": "USER" | "ADMIN"
+}
+```
+
+**Auth**
+
+- Register
+
+`[POST]`: `http://localhost:5000/api/auth/register`
+
+### Request Body
+
+| Query      | Type   | Required |
+| ---------- | ------ | -------- |
+| `email`    | string | ✅       |
+| `fullName` | string | ✅       |
+| `password` | string | ✅       |
+
+```json
+{
+  "email": "tri@example.com",
+  "fullName": "minhtrifit",
+  "password": "123456"
+}
+```
+
+- Login
+
+`[POST]`: `http://localhost:5000/api/auth/login`
+
+### Request Body
+
+| Query      | Type   | Required |
+| ---------- | ------ | -------- |
+| `email`    | string | ✅       |
+| `password` | string | ✅       |
+
+```json
+{
+  "email": "tri@example.com",
+  "password": "123456"
 }
 ```
