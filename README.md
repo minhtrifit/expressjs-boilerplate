@@ -95,6 +95,12 @@ npm run prisma:seed
 
 ## 📝 API List<a name="api-list"></a>
 
+### Global Request Header
+
+| Key               | Value                          | Required |
+| ----------------- | ------------------------------ | -------- |
+| `Accept-Language` | `vi` or `en` (default is `vi`) | ❌       |
+
 > **User**
 
 - Get user list
