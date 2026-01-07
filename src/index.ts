@@ -4,9 +4,11 @@ import dotenv from 'dotenv';
 import path from 'path';
 import http from 'http';
 import { Server } from 'socket.io';
+import i18nextMiddleware from 'i18next-http-middleware';
 import { errorHandler } from './middlewares/errorHandler';
 import { multerErrorHandler } from './middlewares/multer-error.middleware';
 import { registerSocketEvents } from './sockets';
+import i18next from './configs/i18n';
 import { HTTP_STATUS } from './constants/http-status-code';
 import userRoutes from './routes/user.router';
 import authRoutes from './routes/auth.router';
@@ -43,6 +45,8 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.resolve('uploads')));
+app.use(i18nextMiddleware.handle(i18next));
+app.use(express.json());
 
 // Routes
 app.get('/', (req, res) => {

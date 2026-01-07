@@ -19,6 +19,8 @@ export const CreateSchema = Joi.object({
 
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const { t } = req;
+
     const page = Math.max(Number(req.query.page) || 1, 1);
     const limit = Math.min(Number(req.query.limit) || 10, 100);
 
@@ -57,7 +59,8 @@ export const getUsers = async (req: Request, res: Response, next: NextFunction) 
       data: {
         data,
         paging
-      }
+      },
+      message: t('user.get_list_successfully')
     });
   } catch (error) {
     next(error);
@@ -66,6 +69,8 @@ export const getUsers = async (req: Request, res: Response, next: NextFunction) 
 
 export const getUserById = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const { t } = req;
+
     // Check client id
     const id = req.params.id;
 
@@ -73,7 +78,7 @@ export const getUserById = async (req: Request, res: Response, next: NextFunctio
       return res.status(HTTP_STATUS.BAD_REQUEST).json({
         success: false,
         data: null,
-        message: 'User ID not found'
+        message: t('user.user_id_not_found')
       });
     }
 
@@ -86,14 +91,14 @@ export const getUserById = async (req: Request, res: Response, next: NextFunctio
       return res.status(HTTP_STATUS.NOT_FOUND).json({
         success: false,
         data: null,
-        message: 'User not found'
+        message: t('user.user_not_found')
       });
     }
 
     return res.status(HTTP_STATUS.OK).json({
       success: true,
       data: user,
-      message: 'Get user successfully'
+      message: t('user.get_detail_successfully')
     });
   } catch (error) {
     next(error);
@@ -102,6 +107,8 @@ export const getUserById = async (req: Request, res: Response, next: NextFunctio
 
 export const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const { t } = req;
+
     const { error, value } = CreateSchema.validate(req.body, {
       abortEarly: false, // trả về tất cả lỗi
       allowUnknown: false // không cho field dư
@@ -138,7 +145,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
       return res.status(HTTP_STATUS.BAD_REQUEST).json({
         success: false,
         data: null,
-        message: 'User email is existed'
+        message: t('user.user_email_existed')
       });
     }
 
@@ -159,7 +166,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
     return res.status(HTTP_STATUS.CREATED).json({
       success: true,
       data: user,
-      message: 'Created user successfully'
+      message: t('user.create_successfully')
     });
   } catch (error) {
     next(error);
@@ -168,6 +175,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
 
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const { t } = req;
     const { id } = req.params;
     const { email, fullName, password, isActive } = req.body;
 
@@ -175,7 +183,7 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
     if (fullName === undefined && email === undefined && password === undefined && isActive === undefined) {
       return res.status(HTTP_STATUS.BAD_REQUEST).json({
         success: false,
-        message: 'At least one field is required'
+        message: t('at_least_one_field_required')
       });
     }
 
@@ -187,7 +195,7 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
     if (!user) {
       return res.status(HTTP_STATUS.NOT_FOUND).json({
         success: false,
-        message: 'User not found'
+        message: t('user.user_not_found')
       });
     }
 
@@ -218,7 +226,8 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
 
     return res.status(200).json({
       success: true,
-      data: updatedUser
+      data: updatedUser,
+      message: t('user.update_successfully')
     });
   } catch (error) {
     next(error);

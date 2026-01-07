@@ -1,0 +1,28 @@
+{
+  "at_least_one_field_required": "Yêu cầu tối thiểu 1 trường dữ liệu",
+  "auth": {
+    "register_success": "Đăng ký thành công",
+    "login_success": "Đăng nhập thành công",
+    "invalid_token": "Token không hợp lệ",
+    "authorized_failed": "Xác thực không thành công",
+    "user_email_existed": "Email đã tồn tại",
+    "user_not_found": "Người dùng không tồn tại",
+    "email_password_required": "Vui lòng nhập email & password",
+    "email_password_not_match": "Email hoặc tài khoản không đúng"
+  },
+  "upload": {
+    "file_required": "Vui lòng chọn file",
+    "files_required": "Vui lòng chọn tập file",
+    "upload_file_successfully": "Tải lên file thành công",
+    "upload_files_successfully": "Tải lên tập file thành công"
+  },
+  "user": {
+    "get_list_successfully": "Lấy danh sách người dùng thành công",
+    "get_detail_successfully": "Lấy thông tin người dùng thành công",
+    "user_id_not_found": "Không tìm thấy ID người dùng",
+    "user_email_existed": "Email đã tồn tại",
+    "user_not_found": "Người dùng không tồn tại",
+    "create_successfully": "Thêm mới người dùng thành công",
+    "update_successfully": "Cập nhật người dùng thành công"
+  }
+}

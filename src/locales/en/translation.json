@@ -1,0 +1,28 @@
+{
+  "at_least_one_field_required": "At least one field is required",
+  "auth": {
+    "register_success": "Register successfully",
+    "login_success": "Login successfully",
+    "invalid_token": "Invalid token",
+    "authorized_failed": "Authorized failed",
+    "user_email_existed": "User email is existed",
+    "user_not_found": "User not found",
+    "email_password_required": "Email or password are missing",
+    "email_password_not_match": "Email or password not match"
+  },
+  "upload": {
+    "file_required": "File is required",
+    "files_required": "Files are required",
+    "upload_file_successfully": "Upload file successfully",
+    "upload_files_successfully": "Upload files successfully"
+  },
+  "user": {
+    "get_list_successfully": "Get users successfully",
+    "get_detail_successfully": "Get user successfully",
+    "user_id_not_found": "User ID not found",
+    "user_email_existed": "User email is existed",
+    "user_not_found": "User not found",
+    "create_successfully": "Create successfully",
+    "update_successfully": "Update successfully"
+  }
+}
