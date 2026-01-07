@@ -95,7 +95,7 @@ npm run prisma:seed
 
 ## 📝 API List<a name="api-list"></a>
 
-**User**
+> **User**
 
 - Get user list
 
@@ -117,6 +117,12 @@ npm run prisma:seed
 - Create new user
 
 `[POST]`: `http://localhost:5000/api/users`
+
+### Request Header
+
+| Key             | Type               | Required |
+| --------------- | ------------------ | -------- |
+| `Authorization` | Bearer token-value | ✅       |
 
 ### Request Body
 
@@ -140,6 +146,12 @@ npm run prisma:seed
 
 `[PATCH]`: `http://localhost:5000/api/users/:id`
 
+### Request Header
+
+| Key             | Type               | Required |
+| --------------- | ------------------ | -------- |
+| `Authorization` | Bearer token-value | ✅       |
+
 ### Request Body
 
 | Query      | Type              | Required |
@@ -158,7 +170,7 @@ npm run prisma:seed
 }
 ```
 
-**Auth**
+> **Auth**
 
 - Register
 
@@ -198,7 +210,7 @@ npm run prisma:seed
 }
 ```
 
-**Upload**
+> **Upload**
 
 - Single upload
 

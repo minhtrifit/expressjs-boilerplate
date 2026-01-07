@@ -1,9 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
+import Joi from 'joi';
 import { HTTP_STATUS } from '@/constants/http-status-code';
 import { prisma } from '@/libs/prisma';
 import { hashPassword, isValidRole } from '@/libs/auth';
 import { Role, UserPayload } from '@/models/User';
 import { PagingType } from '@/models';
+
+const roleValues = Object.values(Role);
+
+export const CreateSchema = Joi.object({
+  email: Joi.string().required(),
+  password: Joi.string().required(),
+  fullName: Joi.string().required(),
+  role: Joi.string()
+    .valid(...roleValues)
+    .optional()
+});
 
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -90,16 +102,32 @@ export const getUserById = async (req: Request, res: Response, next: NextFunctio
 
 export const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { email, password, fullName, role } = req.body;
+    const { error, value } = CreateSchema.validate(req.body, {
+      abortEarly: false, // trả về tất cả lỗi
+      allowUnknown: false // không cho field dư
+    });
 
-    // Check role
-    if (role && !isValidRole(role)) {
+    if (error) {
       return res.status(HTTP_STATUS.BAD_REQUEST).json({
         success: false,
         data: null,
-        message: 'Role is not existed'
+        message: error.details.map((err) => ({
+          field: err.path.join('.'),
+          message: err.message
+        }))
       });
     }
+
+    const { email, password, fullName, role } = value;
+
+    // Check role
+    // if (role && !isValidRole(role)) {
+    //   return res.status(HTTP_STATUS.BAD_REQUEST).json({
+    //     success: false,
+    //     data: null,
+    //     message: 'Role is not existed'
+    //   });
+    // }
 
     // Find user with email
     const existedUser = await prisma.user.findUnique({

@@ -1,12 +1,40 @@
 import { Request, Response, NextFunction } from 'express';
+import Joi from 'joi';
 import { prisma } from '@/libs/prisma';
 import { comparePassword, generateToken, hashPassword } from '@/libs/auth';
 import { Role, UserPayload } from '@/models/User';
 import { HTTP_STATUS } from '@/constants/http-status-code';
 
+export const RegisterSchema = Joi.object({
+  email: Joi.string().required(),
+  fullName: Joi.string().required(),
+  password: Joi.string().required()
+});
+
+export const LoginSchema = Joi.object({
+  email: Joi.string().required(),
+  password: Joi.string().required()
+});
+
 export const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { email, password, fullName } = req.body;
+    const { error, value } = RegisterSchema.validate(req.body, {
+      abortEarly: false, // trả về tất cả lỗi
+      allowUnknown: false // không cho field dư
+    });
+
+    if (error) {
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({
+        success: false,
+        data: null,
+        message: error.details.map((err) => ({
+          field: err.path.join('.'),
+          message: err.message
+        }))
+      });
+    }
+
+    const { email, password, fullName } = value;
 
     // Find user with email
     const existedUser = await prisma.user.findUnique({
@@ -47,7 +75,23 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { email, password } = req.body;
+    const { error, value } = LoginSchema.validate(req.body, {
+      abortEarly: false, // trả về tất cả lỗi
+      allowUnknown: false // không cho field dư
+    });
+
+    if (error) {
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({
+        success: false,
+        data: null,
+        message: error.details.map((err) => ({
+          field: err.path.join('.'),
+          message: err.message
+        }))
+      });
+    }
+
+    const { email, password } = value;
 
     if (!email || !password) {
       return res.status(HTTP_STATUS.BAD_REQUEST).json({
