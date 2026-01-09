@@ -4,8 +4,10 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const { combine, timestamp, printf, colorize, errors } = format;
 
-const logFormat = printf(({ level, message, timestamp, stack }) => {
-  return `${timestamp} [${level}]: ${stack || message}`;
+const logFormat = printf(({ level, message, timestamp, ...meta }) => {
+  const metaString = Object.keys(meta).length > 0 ? ` ${JSON.stringify(meta)}` : '';
+
+  return `${timestamp} [${level}]: ${message}${metaString}`;
 });
 
 const logger = createLogger({
