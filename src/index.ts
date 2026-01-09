@@ -7,6 +7,7 @@ import { Server } from 'socket.io';
 import i18nextMiddleware from 'i18next-http-middleware';
 import { errorHandler } from './middlewares/errorHandler';
 import { multerErrorHandler } from './middlewares/multer-error.middleware';
+import { morganMiddleware } from './configs/morgan';
 import { registerSocketEvents } from './sockets';
 import i18next from './configs/i18n';
 import { HTTP_STATUS } from './constants/http-status-code';
@@ -46,6 +47,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.resolve('uploads')));
 app.use(i18nextMiddleware.handle(i18next));
+app.use(morganMiddleware);
 app.use(express.json());
 
 // Routes
