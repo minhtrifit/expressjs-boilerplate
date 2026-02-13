@@ -48,7 +48,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.resolve('uploads')));
 app.use(i18nextMiddleware.handle(i18next));
 app.use(morganMiddleware);
-app.use(express.json());
 
 // Routes
 app.get('/', (req, res) => {

@@ -10,7 +10,7 @@ i18next
     fallbackLng: 'vi',
     preload: ['vi', 'en'],
     backend: {
-      loadPath: path.join(__dirname, '../locales/{{lng}}/translation.json')
+      loadPath: path.join(process.cwd(), 'src/locales/{{lng}}/translation.json')
     },
     detection: {
       order: ['header', 'querystring', 'cookie'],

@@ -6,7 +6,7 @@ import { StringValue } from 'ms';
 const SALT_ROUNDS = 10;
 
 export interface JwtPayload {
-  userId: number;
+  userId: string;
   role: Role;
 }
 
