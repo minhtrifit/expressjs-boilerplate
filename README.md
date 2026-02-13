@@ -22,6 +22,7 @@
 - Project use [Prisma](https://www.prisma.io/docs/getting-started) as ORM
 
 ```bash
+BASE_URL=http://localhost:5000
 PORT=5000
 NODE_ENV=development
 CLIENT_URL=http://localhost:3000

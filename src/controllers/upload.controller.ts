@@ -1,39 +1,34 @@
 import { Request, Response, NextFunction } from 'express';
 import { HTTP_STATUS } from '@/constants/http-status-code';
+import { UploadError, uploadService } from '@/services/upload.service';
 
 export const uploadFile = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { t } = req;
+
     const { id } = req.params;
     const { name } = req.body;
     const file = req.file;
 
-    if (!file) {
+    const baseUrl = process.env.BASE_URL || `${req.protocol}://${req.get('host')}`;
+
+    const result = uploadService.buildFile(id, name, baseUrl, file);
+
+    return res.status(HTTP_STATUS.OK).json({
+      success: true,
+      data: result,
+      message: t('upload.upload_file_successfully')
+    });
+  } catch (error: any) {
+    const { t } = req;
+
+    if (error.message === UploadError.FILE_NOT_FOUND) {
       return res.status(HTTP_STATUS.BAD_REQUEST).json({
         success: false,
         message: t('upload.file_required')
       });
     }
 
-    const baseUrl = `${req.protocol}://${req.get('host')}`;
-    const fileUrl = `${baseUrl}/uploads/${file.filename}`;
-
-    return res.status(HTTP_STATUS.OK).json({
-      success: true,
-      data: {
-        id,
-        name,
-        file: {
-          originalName: file.originalname,
-          fileName: file.filename,
-          size: file.size,
-          mimeType: file.mimetype,
-          url: fileUrl
-        }
-      },
-      message: t('upload.upload_file_successfully')
-    });
-  } catch (error) {
     next(error);
   }
 };
@@ -43,7 +38,19 @@ export const uploadFiles = async (req: Request, res: Response, next: NextFunctio
     const { t } = req;
     const files = req.files as Express.Multer.File[];
 
-    if (!files || files.length === 0) {
+    const baseUrl = process.env.BASE_URL || `${req.protocol}://${req.get('host')}`;
+
+    const result = uploadService.buildFiles(baseUrl, files);
+
+    return res.status(HTTP_STATUS.OK).json({
+      success: true,
+      data: result,
+      message: t('upload.upload_files_successfully')
+    });
+  } catch (error: any) {
+    const { t } = req;
+
+    if (error.message === UploadError.FILES_NOT_FOUND) {
       return res.status(HTTP_STATUS.BAD_REQUEST).json({
         success: false,
         data: null,
@@ -51,20 +58,6 @@ export const uploadFiles = async (req: Request, res: Response, next: NextFunctio
       });
     }
 
-    const baseUrl = `${req.protocol}://${req.get('host')}`;
-
-    return res.status(HTTP_STATUS.OK).json({
-      success: true,
-      data: files.map((file) => ({
-        originalName: file.originalname,
-        fileName: file.filename,
-        size: file.size,
-        mimeType: file.mimetype,
-        url: `${baseUrl}/uploads/${file.filename}`
-      })),
-      message: t('upload.upload_files_successfully')
-    });
-  } catch (error) {
     next(error);
   }
 };
