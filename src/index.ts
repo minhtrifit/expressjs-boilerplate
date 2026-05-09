@@ -10,10 +10,7 @@ import { multerErrorHandler } from './middlewares/multer-error.middleware';
 import { morganMiddleware } from './configs/morgan';
 import { registerSocketEvents } from './sockets';
 import i18next from './configs/i18n';
-import { HTTP_STATUS } from './constants/http-status-code';
-import userRoutes from './routes/user.router';
-import authRoutes from './routes/auth.router';
-import uploadRoutes from './routes/upload.router';
+import registerRoutes from './routes';
 
 dotenv.config();
 
@@ -50,12 +47,7 @@ app.use(i18nextMiddleware.handle(i18next));
 app.use(morganMiddleware);
 
 // Routes
-app.get('/', (req, res) => {
-  res.status(HTTP_STATUS.OK).json({ success: true, message: 'Welcome to Express Boilerplate!' });
-});
-app.use('/api/users', userRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/upload', uploadRoutes);
+registerRoutes(app);
 
 // Error handling middleware
 app.use(multerErrorHandler);
