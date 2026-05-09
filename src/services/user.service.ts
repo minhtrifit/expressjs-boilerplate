@@ -61,6 +61,8 @@ export const userService = {
     });
 
     if (!user) throw new Error(UserError.NOT_FOUND);
+
+    return user;
   },
 
   async create(payload: UserPayload) {
