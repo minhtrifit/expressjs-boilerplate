@@ -28,6 +28,13 @@ NODE_ENV=development
 CLIENT_URL=http://localhost:3000
 JWT_SECRET=expressjs_boilerplate
 DATABASE_URL="postgresql://postgresql:123456@localhost:5432/expressjs_boilerplate"
+
+# IF AUTHENTICATED WITH ADMIN ROLE
+ADMIN_CODE=USER_FOR_CREATE_USER
+
+# IF USING SEND EMAIL SERVICE
+EMAIL_USER=
+EMAIL_PASSWORD=
 ```
 
 ## 📦 Installation <a name="installation"></a>
