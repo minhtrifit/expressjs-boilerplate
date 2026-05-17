@@ -1,0 +1,4 @@
+echo "husky pre commit is running"
+
+npm run build
+npm run lint
