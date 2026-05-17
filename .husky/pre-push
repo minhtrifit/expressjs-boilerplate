@@ -1,0 +1,2 @@
+echo "Start building project..."
+npm run build

@@ -19,6 +19,15 @@
     "prod": "npm run prisma:generate && npm run prisma:migrate:deploy && npm run build && npm run start",
     "prepare": "husky"
   },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
   "keywords": [],
   "author": "minhtrifit",
   "license": "ISC",
