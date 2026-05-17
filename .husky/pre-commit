@@ -1,4 +1,4 @@
 echo "🐶 .husky pre commit is running..."
 
-echo "Start lint staged project..."
+echo "Start running lint-staged..."
 npx lint-staged
