@@ -11,7 +11,7 @@
 
 ## 💻 Required & Technical Stack <a name="required-technical-stack"></a>
 
-- Node version: >18.x (recommend 24.12.0)
+- Node version: >18.x (recommend 24.22.1)
 - [Express.js](https://expressjs.com)
 - [ProgreSQL](https://www.postgresql.org)
 - [Prisma](https://www.prisma.io)
